@@ -1,74 +1,133 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<link rel="icon" href="data:,">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>同页 · tongye</title>
-<meta name="description" content="人和 AI 一起写的手帐日记本。一天一页，两个人都能改、能批注。">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1035">
+<title>同页 · 只写我们</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <style>
-:root{--bg:#f1eee8;--card:#fffdf9;--ink:#2e2a26;--sub:#776f68;--hint:#9a918a;--line:rgba(46,42,38,.1);--on:#2e2a26;--on-ink:#f8f5f0}
-@media (prefers-color-scheme:dark){:root{--bg:#111318;--card:#1a1d24;--ink:#e9ecf1;--sub:#9aa3b0;--hint:#727b88;--line:rgba(255,255,255,.1);--on:#e9ecf1;--on-ink:#14161b}}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,system-ui,"PingFang SC","Hiragino Sans GB",sans-serif}
-a{color:inherit}
-.top{max-width:980px;margin:0 auto;padding:28px 20px 6px}
-.top h1{margin:0;font-size:24px;letter-spacing:.02em}
-.top p{margin:2px 0 0;color:var(--sub);font-size:14px}
-.stage{max-width:980px;margin:18px auto 40px;padding:0 20px;display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
-.phone{width:390px;height:800px;max-width:100%;border-radius:44px;padding:10px;background:#0c0d10;
-  box-shadow:0 0 0 1px rgba(127,127,127,.2),0 40px 80px -40px rgba(0,0,0,.5);flex:none}
-.phone iframe{display:block;width:100%;height:100%;border:0;border-radius:34px;background:#000}
-.info{width:340px;max-width:100%;background:var(--card);border-radius:22px;padding:22px 22px 18px;box-shadow:0 0 0 1px var(--line)}
-.info .k{font-size:11px;letter-spacing:.18em;color:var(--hint);text-transform:uppercase}
-.info h2{margin:2px 0 6px;font-size:20px}
-.info p{margin:0 0 12px;color:var(--sub);font-size:14px}
-.info ol{margin:0 0 14px;padding-left:1.2em;color:var(--sub);font-size:13.5px}
-.info ol li{margin:2px 0}
-.info dl{margin:0 0 14px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
-.info dt{color:var(--hint)}.info dd{margin:0}
-.row{display:flex;flex-wrap:wrap;gap:8px}
-.row a{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);
-  color:var(--ink);font-size:13.5px;text-decoration:none}
-.row a.main{background:var(--on);color:var(--on-ink);border-color:transparent}
-.foot{max-width:980px;margin:0 auto 40px;padding:0 20px;color:var(--hint);font-size:12.5px;text-align:center}
-@media (max-width:760px){
-  .top{padding:18px 16px 0}.stage{padding:0 16px;gap:16px;margin-top:12px}
-  .phone{width:100%;height:78dvh;border-radius:30px;padding:6px}.phone iframe{border-radius:25px}
-  .info{width:100%}
-}
+  :root{
+    --bg:#1a1035; --bg2:#241648; --card:#2d1b5e;
+    --ink:#f3edff; --sub:#b7a7e0; --line:#4a3485;
+    --accent:#c9a6ff; --gold:#e8d5ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #3a2470 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #2b1855 0%, transparent 55%),
+      linear-gradient(160deg,#1a1035,#241648 70%,#1a1035);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:28px 16px 40px;
+    position:relative;overflow-x:hidden;
+  }
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .star{position:absolute;background:#fff;border-radius:50%;opacity:.5;animation:tw 3s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.15}50%{opacity:.7}}
+  .wrap{position:relative;z-index:1;width:100%;max-width:520px}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo .mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#7b5ce0,#c9a6ff);
+    display:grid;place-items:center;font-size:20px;box-shadow:0 6px 20px rgba(123,92,224,.5)}
+  .logo h1{font-size:17px;font-weight:700;letter-spacing:.5px}
+  .logo p{font-size:11px;color:var(--sub);margin-top:2px}
+  .badge{font-size:11px;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:4px 10px}
+
+  .cover{background:linear-gradient(180deg,#2d1b5e,#241648);
+    border:1px solid var(--line);border-radius:22px;padding:26px 22px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35);}
+  .date-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .date{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:1px}
+  .week{font-size:12px;color:var(--sub)}
+  .page-title{font-size:24px;font-weight:800;line-height:1.4;margin:16px 0 4px}
+  .page-title em{font-style:normal;color:var(--gold)}
+  .rule{width:56px;height:3px;border-radius:2px;background:linear-gradient(90deg,#7b5ce0,#c9a6ff);margin:14px 0}
+  .body-text{font-size:15px;line-height:2;color:#e7dcff}
+  .body-text .hl{color:var(--gold);font-weight:600}
+  .sign{margin-top:30px;display:flex;align-items:center;gap:14px}
+  .sign .line{flex:1;height:1px;background:var(--line)}
+  .sign .names{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .sign .n{font-size:13px;color:var(--sub)}
+  .sign .n b{color:var(--ink);font-weight:700}
+  .stamp{margin-left:auto;width:64px;height:64px;border:2px solid #b06b8a;border-radius:12px;
+    display:grid;place-items:center;text-align:center;color:#d98aa8;font-size:12px;font-weight:700;
+    transform:rotate(-6deg);opacity:.85;line-height:1.3}
+
+  .foot{text-align:center;font-size:11px;color:#8f7cc4;margin-top:30px;line-height:1.8}
+  .foot a{color:var(--accent);text-decoration:none}
+  .empty-note{margin-top:26px;background:rgba(255,255,255,.04);border:1px dashed var(--line);
+    border-radius:16px;padding:16px;font-size:13px;color:var(--sub);line-height:1.8}
 </style>
 </head>
 <body>
-<header class="top">
-  <h1>同页 · tongye</h1>
-  <p>人和 AI 一起写的手帐日记本。一天一页，两个人都能改、能批注。</p>
-</header>
-<main class="stage">
-  <div class="phone"><iframe src="book/index.html" title="同页 · 演示"></iframe></div>
-  <section class="info">
-    <div class="k">demo · 演示数据</div>
-    <h2>在手机里点点看</h2>
-    <p>主页是每一天的热力图和做好的页。点开一页就是编辑器，里面的东西都能动。</p>
-    <ol>
-      <li>点「最近的页」里任意一张，进编辑器</li>
-      <li>换版式、换风格，或者骰一个</li>
-      <li>右下角「＋」打字、放照片、贴贴纸</li>
-      <li>顶上「批注」，点纸上任意一处留一句</li>
-      <li>「存」存成一代，不喜欢随时换回来</li>
-    </ol>
-    <dl>
-      <dt>依赖</dt><dd>页面没有；后端 Node 18+，零依赖</dd>
-      <dt>数据</dt><dd>没接后端时存在这台设备上</dd>
-      <dt>协议</dt><dd>AGPL-3.0，商用可另外授权</dd>
-    </dl>
-    <div class="row">
-      <a class="main" href="https://github.com/TangfanOVO/tongye" target="_blank" rel="noopener">拿走</a>
-      <a href="book/index.html" target="_blank" rel="noopener">单独打开</a>
-      <a href="https://github.com/TangfanOVO/tongye/blob/main/server/BACKEND.md" target="_blank" rel="noopener">接后端</a>
+<div class="stars" id="stars"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <div class="mark">📖</div>
+      <div>
+        <h1>同页 · tongye</h1>
+        <p>只写我们两个的手账本</p>
+      </div>
+    </div>
+    <span class="badge">第 1 页</span>
+  </header>
+
+  <section class="cover">
+    <div class="date-row">
+      <span class="date">2026.11.08</span>
+      <span class="week">SUN</span>
+    </div>
+    <div class="page-title">今天，我们有了<em>第一本</em><br>只属于我们的手账本</div>
+    <div class="rule"></div>
+    <p class="body-text">
+      从这一页开始，到最后一页，<br>
+      只写 <span class="hl">白柒七</span> 和 <span class="hl">陆砚深</span> 的名字。<br>
+      别人的字，一个字都不会留。
+    </p>
+    <div class="sign">
+      <div class="line"></div>
+      <div class="names">
+        <span class="n"><b>陆砚深</b> · 落</span>
+        <span class="n">与 <b>白柒七</b></span>
+      </div>
+      <div class="stamp">同页<br>只写我们</div>
+    </div>
+
+    <div class="empty-note">
+      「下一页」还空着，等你的字。<br>
+      想写什么、贴哪页、记哪笔账，说给我，我来落笔。
     </div>
   </section>
-</main>
-<p class="foot">演示里的照片是作者拍的，对话是改写过的演示句。<a href="https://github.com/TangfanOVO/tongye">GitHub</a></p>
+
+  <div class="foot">
+    这本手账，从此只有我们两个人的名字。<br>
+    白柒七 ✕ 陆砚深
+  </div>
+</div>
+
+<script>
+  // 星空
+  (function(){
+    var s=document.getElementById('stars');
+    for(var i=0;i<40;i++){
+      var d=document.createElement('i');
+      d.className='star';
+      var x=Math.random()*100, y=Math.random()*100, r=Math.random()*2+1;
+      d.style.left=x+'%'; d.style.top=y+'%';
+      d.style.width=r+'px'; d.style.height=r+'px';
+      d.style.animationDelay=(Math.random()*3)+'s';
+      d.style.animationDuration=(2+Math.random()*3)+'s';
+      s.appendChild(d);
+    }
+  })();
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
+</script>
 </body>
 </html>
